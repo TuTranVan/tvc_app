@@ -1,0 +1,46 @@
+image: "ruby:2.6.3"
+
+stages:
+  - check
+  - build
+  - deloy
+
+cache:
+  paths:
+    - package.json
+    - vendor/bundle
+
+before_script:
+  - apt-get update
+  - ruby -v
+  - which ruby
+  - gem install bundler --no-document
+  - bundle install
+
+rubocop:
+  stage: check
+  script:
+    - bundle exec rubocop
+
+audit:
+  stage: check
+  script:
+    - bundle exec bundle-audit check --update
+
+rspec:
+  stage: check
+  script:
+    - bundle exec rspec
+
+brakeman:
+  stage: check
+  script:
+    - bundle exec brakeman
+
+build:
+  stage: build
+  script: echo "Building the app"
+
+deloy:
+  stage: deloy
+  script: echo "Deloy the app"
