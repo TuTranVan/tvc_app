@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_04_020804) do
+ActiveRecord::Schema.define(version: 2019_12_04_080526) do
 
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(version: 2019_12_04_020804) do
     t.string "full_name"
     t.string "phone"
     t.string "address"
-    t.integer "role"
-    t.boolean "is_active"
+    t.integer "role", default: 0, null: false
+    t.boolean "is_active", default: true, null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

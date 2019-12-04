@@ -1,9 +1,15 @@
-image: "ruby:2.6.3"
+image: 'ruby:2.6.3'
+
+services:
+  - mysql:5.7
+
+variables:
+  MYSQL_DATABASE: 'pj-voucher_test'
+  MYSQL_ROOT_PASSWORD: ''
+  MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
 
 stages:
   - check
-  - build
-  - deloy
 
 cache:
   paths:
@@ -11,11 +17,12 @@ cache:
     - vendor/bundle
 
 before_script:
-  - apt-get update
-  - ruby -v
-  - which ruby
+  - apt-get update -qq && apt-get install -y -qq nodejs
   - gem install bundler --no-document
+  - cp config/database.yml.ci config/database.yml
   - bundle install
+  - bundle exec rails db:create RAILS_ENV=test
+  - bundle exec rails db:schema:load RAILS_ENV=test
 
 rubocop:
   stage: check
@@ -36,11 +43,3 @@ brakeman:
   stage: check
   script:
     - bundle exec brakeman
-
-build:
-  stage: build
-  script: echo "Building the app"
-
-deloy:
-  stage: deloy
-  script: echo "Deloy the app"

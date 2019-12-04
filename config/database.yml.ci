@@ -1,0 +1,10 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  host: mysql
+  username: root
+  password:
+  
+test:
+  <<: *default
+  database: pj_voucher_test

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 ruby '2.6.3'
 
@@ -17,10 +17,12 @@ gem 'webpacker'
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails'
+  gem 'faker'
   gem 'rubocop', require: false
 end
 
 group :development do
+  gem 'awesome_print', require:'ap'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'brakeman', require: false
@@ -37,10 +39,14 @@ end
 
 group :test do
   gem 'capybara', '>= 2.15'
-  gem 'chromedriver-helper'
-  gem 'selenium-webdriver'
+  gem 'webdrivers'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
+  gem 'database_cleaner'
+  gem 'simplecov', require: false
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
+gem 'active_model_serializers', '~> 0.10.2'
