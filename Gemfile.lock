@@ -120,6 +120,7 @@ GEM
       activesupport (>= 4.2.0)
     json (2.2.0)
     jsonapi-renderer (0.2.2)
+    jwt (2.2.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -152,7 +153,8 @@ GEM
     parser (2.6.5.0)
       ast (~> 2.4.0)
     public_suffix (4.0.1)
-    puma (3.12.1)
+    puma (4.3.1)
+      nio4r (~> 2.0)
     rack (2.0.7)
     rack-contrib (2.1.0)
       rack (~> 2.0)
@@ -312,11 +314,12 @@ DEPENDENCIES
   faker
   foreman
   jbuilder (~> 2.5)
+  jwt
   listen (>= 3.0.5, < 3.2)
   meta_request
   mysql2 (>= 0.4.4, < 0.6.0)
   overcommit
-  puma (~> 3.11)
+  puma (>= 4.3.1)
   rails (~> 5.2.4)
   rspec-rails
   rubocop

@@ -7,7 +7,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
-gem 'puma', '~> 3.11'
+gem 'puma', '>= 4.3.1'
 gem 'rails', '~> 5.2.4'
 gem 'sass-rails', '~> 5.0'
 gem 'turbolinks', '~> 5'
@@ -50,3 +50,4 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'active_model_serializers', '~> 0.10.2'
+gem 'jwt'
