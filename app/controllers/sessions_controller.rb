@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :authenticate_request!, only: [:new, :create]
   before_action :load_user, only: :create
 
   def create
@@ -7,6 +8,11 @@ class SessionsController < ApplicationController
     else
       render json: { error: "Password is invalid" }, status: 401
     end
+  end
+
+  def destroy
+    sign_out current_user
+    render json: {}, status: 200
   end
 
   private
