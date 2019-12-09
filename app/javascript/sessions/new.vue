@@ -23,7 +23,10 @@
         <b-button type="submit" variant="primary">Login</b-button>
         <p class="text-danger">{{ error }}</p>
       </b-form>
-      <b class="text-success" v-else>{{ auth.full_name }} logged in system</b>
+      <div v-else>
+        <b class="text-success">{{ auth.full_name }} logged in system</b>
+        <b-button size="sm" variant="danger" @click="onSignout">SignOut</b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -61,13 +64,35 @@
         })
         .then(response => {
           this.error = null
+          this.onReset()
           this.auth = response.data.auth;
-          localStorage.setItem("auth", JSON.stringify(this.auth));
-          localStorage.setItem("auth_token", JSON.stringify(response.data.auth_token));
+          localStorage.setItem("auth", JSON.stringify(this.auth))
+          localStorage.setItem("auth_token", response.data.auth_token)
         })
         .catch(error => {
           this.error = error.response.data.error
         });
+      },
+      onSignout(evt) {
+        evt.preventDefault()
+        axios({
+          method: "delete",
+          url: window.location.origin + '/signout',
+          headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 
+                    'Authorization': 'Bearer ' + localStorage.getItem("auth_token") }
+        })
+        .then(response => {
+          this.auth = ""
+          localStorage.removeItem("auth");
+          localStorage.removeItem("auth_token")
+        })
+        .catch(error => {
+          this.error = error.response.data.error
+        });
+      },
+      onReset(){
+        this.user.email = "",
+        this.user.password = ""
       }
     }
   }
