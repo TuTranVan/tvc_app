@@ -16,6 +16,10 @@ import UsersIndex from 'admin/users/index'
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
+    el: '#users-new',
+    render: h => h(UsersNew, {})
+  })
+  new Vue({
     el: '#admin-user-index',
     store,
     render: h => h(UsersIndex, {})
