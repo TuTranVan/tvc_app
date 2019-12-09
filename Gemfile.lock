@@ -152,6 +152,11 @@ GEM
     parallel (1.19.1)
     parser (2.6.5.0)
       ast (~> 2.4.0)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-rails (0.3.9)
+      pry (>= 0.10.4)
     public_suffix (4.0.1)
     puma (4.3.1)
       nio4r (~> 2.0)
@@ -320,6 +325,8 @@ DEPENDENCIES
   mysql2 (>= 0.4.4, < 0.6.0)
   overcommit
   puma (>= 4.3.1)
+  pry-rails
+  puma (~> 3.11)
   rails (~> 5.2.4)
   rspec-rails
   rubocop

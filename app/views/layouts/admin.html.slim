@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title PjVoucher
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application'
+  body
+    #wrapper.d-flex
+      = render 'shared/admin/sidebar'
+      #page-content-wrapper
+        = render 'shared/admin/header'
+        .container-fluid
+          = yield
