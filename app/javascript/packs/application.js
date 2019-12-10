@@ -13,6 +13,7 @@ import AdminHeader from 'admin/header'
 import UsersNew from 'users/new'
 import SessionsNew from 'sessions/new'
 import UsersIndex from 'admin/users/index'
+import CategoriesIndex from 'admin/categories/index'
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
@@ -25,6 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
     render: h => h(UsersIndex, {})
   })
   new Vue({
+    el: '#admin-category-index',
+    store,
+    render: h => h(CategoriesIndex, {})
+  })
+  new Vue({
     el: '#admin-sidebar',
     render: h => h(AdminSidebar, {})
   })
@@ -32,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     el: '#admin-header',
     render: h => h(AdminHeader, {})
   })
-
   new Vue({
     el: '#sessions-new',
     render: h => h(SessionsNew, {})

@@ -3,7 +3,7 @@
     <div class="col-md-4">
       <h2>S I G N U P</h2>
       <hr>
-      <b-form @submit="onSubmit">
+      <b-form @submit="onSubmit" v-if="!auth">
         <b-form-group>
           <b-form-input
             v-model="user.full_name"
@@ -60,6 +60,9 @@
 
         <b-button type="submit" variant="primary">Sign up</b-button>
       </b-form>
+      <div v-else>
+        <b class="text-success">{{ auth.full_name }} logged in system</b>
+      </div>
       <hr>
       <ul class="text-danger">
         <li v-for="(error, index) of errors" :key="index">
@@ -84,7 +87,17 @@
           phone: "",
           address: ""
         },
-        errors: []
+        errors: [],
+        auth: ""
+      }
+    },
+    mounted() {
+      if (localStorage.getItem("auth")) {
+        try {
+          this.auth = JSON.parse(localStorage.getItem("auth"));
+        } catch(e) {
+          localStorage.removeItem("auth");
+        }
       }
     },
     filters: {
@@ -103,6 +116,8 @@
         })
         .then(response => {
           this.errors = null
+          this.auth = response.data.auth;
+          localStorage.setItem("auth", JSON.stringify(response.data.auth))
         })
         .catch(error => {
           this.errors = error.response.data.errors

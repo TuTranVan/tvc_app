@@ -28,7 +28,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'brakeman', require: false
   gem 'bundler-audit'
-  gem 'foreman'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'meta_request'
   gem 'overcommit'
@@ -51,4 +50,3 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'active_model_serializers', '~> 0.10.2'
-gem 'jwt'
