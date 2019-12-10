@@ -13,7 +13,7 @@ const actions = {
 }
 
 const mutations = {
-  setUsers(state, res){
+  setUsers(state, res) {
     state.users = res.users
   }
 }

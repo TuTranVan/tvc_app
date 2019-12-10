@@ -67,7 +67,6 @@
           this.onReset()
           this.auth = response.data.auth;
           localStorage.setItem("auth", JSON.stringify(this.auth))
-          localStorage.setItem("auth_token", response.data.auth_token)
         })
         .catch(error => {
           this.error = error.response.data.error
@@ -78,13 +77,11 @@
         axios({
           method: "delete",
           url: window.location.origin + '/signout',
-          headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 
-                    'Authorization': 'Bearer ' + localStorage.getItem("auth_token") }
+          headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         })
         .then(response => {
           this.auth = ""
           localStorage.removeItem("auth");
-          localStorage.removeItem("auth_token")
         })
         .catch(error => {
           this.error = error.response.data.error
