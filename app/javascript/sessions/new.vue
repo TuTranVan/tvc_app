@@ -59,8 +59,7 @@
         axios({
           method: "post",
           url: window.location.pathname,
-          data: { user: this.user },
-          headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
+          data: { user: this.user }
         })
         .then(response => {
           this.error = null
@@ -76,8 +75,7 @@
         evt.preventDefault()
         axios({
           method: "delete",
-          url: window.location.origin + '/signout',
-          headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
+          url: window.location.origin + '/signout'
         })
         .then(response => {
           this.auth = ""

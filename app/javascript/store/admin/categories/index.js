@@ -30,6 +30,15 @@ const actions = {
         commit('setErrors', data)
       }
     })
+  },
+  deleteCategory({ commit }, category) {
+    admin_catgory_index.deleteCategory(category.id, data => {
+      if (data.hasOwnProperty('error')) {
+        alert(data.error)
+      } else {
+        commit('deleteCategory', category)
+      }
+    })
   }
 }
 
@@ -42,6 +51,11 @@ const mutations = {
   },
   addCategory(state, res) {
     state.categories.push(res.category)
+  },
+  deleteCategory(state, res) {
+    state.categories = state.categories.filter(category => {
+      return category.id != res.id && category.parent != res.name
+    })
   },
   clearCategory(state) {
     state.newCategory = {}

@@ -38,6 +38,7 @@
           <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Parent</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody v-for="(category, index) in categories">
@@ -45,6 +46,9 @@
           <th scope="row">{{category.id}}</th>
           <td>{{category.name}}</td>
           <td>{{category.parent}}</td>
+          <td>
+            <a class="btn btn-outline-danger" @click="deleteCategory(category)">Delete</a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -73,6 +77,11 @@
       addCategory(e){
         e.preventDefault();
         this.$store.dispatch('admin_category_index/addCategory')
+      },
+      deleteCategory(category){
+        if (confirm("Do you want to delete?")) {
+          this.$store.dispatch('admin_category_index/deleteCategory', category)
+        }
       }
     },
     computed: {
