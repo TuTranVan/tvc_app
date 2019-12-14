@@ -111,8 +111,7 @@
         axios({
           method: "post",
           url: window.location.pathname,
-          data: { user: this.user },
-          headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
+          data: { user: this.user }
         })
         .then(response => {
           this.errors = null
