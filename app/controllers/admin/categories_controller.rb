@@ -1,6 +1,6 @@
 module Admin
   class CategoriesController < ApplicationController
-    before_action :load_category, only: :destroy
+    before_action :load_category, only: [:update, :destroy]
 
     def index
       respond_to do |format|
@@ -19,6 +19,14 @@ module Admin
       else
         render json: { errors: category.errors }, status: 422
       end
+    end
+
+    def update
+      if @category.update category_params
+        render json: { category: serializer(@category, serializer: Admin::Categories::IndexSerializer) }, status: 200
+      else
+        render json: { errors: @category.errors }, status: 422
+      end   
     end
 
     def destroy

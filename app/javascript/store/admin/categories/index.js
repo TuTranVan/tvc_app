@@ -4,7 +4,8 @@ const state = {
   categories: [],
   categoriesParent: [],
   newCategory: {},
-  errors: []
+  editCategory: {},
+  errors: {}
 }
 
 const getters = {
@@ -27,7 +28,21 @@ const actions = {
         commit('clearErrors')
         commit('clearCategory')
       } else {
-        commit('setErrors', data)
+        commit('setErrorsCreate', data)
+      }
+    })
+  },
+  editCategory({ commit }, category) {
+    commit('editCategory', category)
+  },
+  updateCategory({ commit }, category) {
+    admin_catgory_index.updateCategory({ id: state.editCategory.id, category: category }, data => {
+      if (data.hasOwnProperty('category')) {
+        commit('updateCategory', data)
+        commit('clearErrors')
+        commit('clearCategory')
+      } else {
+        commit('setErrorsUpdate', data)
       }
     })
   },
@@ -52,6 +67,12 @@ const mutations = {
   addCategory(state, res) {
     state.categories.push(res.category)
   },
+  editCategory(state, res) {
+    state.editCategory = res
+  },
+  updateCategory(state, res) {
+    window.location.reload()
+  },
   deleteCategory(state, res) {
     state.categories = state.categories.filter(category => {
       return category.id != res.id && category.parent != res.name
@@ -59,12 +80,16 @@ const mutations = {
   },
   clearCategory(state) {
     state.newCategory = {}
+    state.editCategory = {}
   },
-  setErrors(state, res) {
-    state.errors = res.errors
+  setErrorsCreate(state, res) {
+    state.errors = { create: res.errors }
+  },
+  setErrorsUpdate(state, res) {
+    state.errors = { update: res.errors }
   },
   clearErrors(state) {
-    state.errors = []
+    state.errors = {}
   }
 }
 
