@@ -2,7 +2,7 @@
   <div>
     <h1>Categories</h1>
     <div>
-      <b-button v-b-toggle.add-category size="sm" variant="primary" @click="showForm">New +</b-button>
+      <b-button v-b-toggle.add-category size="sm" variant="primary" @click="showFormNew">New +</b-button>
       <b-collapse id="add-category" class="mt-2">
         <b-form @submit="addCategory">
           <b-form-group>
@@ -22,7 +22,7 @@
 
           <hr>
           <ul class="text-danger">
-            <li v-for="(error, index) of errors" :key="index">
+            <li v-for="(error, index) of errors.create" :key="index">
               <p v-for="(value, idx) of error" :key="idx">{{ index | capitalize }} {{ value }}</p>
             </li>
           </ul>
@@ -47,10 +47,38 @@
           <td>{{category.name}}</td>
           <td>{{category.parent}}</td>
           <td>
-            <a class="btn btn-outline-danger" @click="deleteCategory(category)">Delete</a>
+            <b-button variant="btn btn-outline-danger" @click="deleteCategory(category)">Delete</b-button>
+            <b-button variant="outline-secondary" @click="showFormEdit(category)">Edit</b-button>
           </td>
         </tr>
       </tbody>
+      <b-modal v-model="showEdit" :hide-footer="true">
+        <b-form @submit="updateCategory">
+          <b-form-group>
+            <b-form-input
+              v-model="editCategory.name"
+              type="text"
+              placeholder="Enter name"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group>
+            <b-form-select
+              v-model="editCategory.parent_id"
+              :options="parents"
+            ></b-form-select>
+          </b-form-group>
+
+          <hr>
+          <ul class="text-danger">
+            <li v-for="(error, index) of errors.update" :key="index">
+              <p v-for="(value, idx) of error" :key="idx">{{ index | capitalize }} {{ value }}</p>
+            </li>
+          </ul>
+
+          <b-button type="submit" variant="primary">Update</b-button>
+        </b-form>
+      </b-modal>
     </table>
   </div>
 </template>
@@ -60,7 +88,9 @@
   export default {
     data() {
       return {
-        parents: []
+        parents: [],
+        showEdit: false,
+        editCategory: {}
       }
     },
     filters: {
@@ -69,14 +99,27 @@
       }
     },
     methods: {
-      showForm(e){
-        e.preventDefault();
+      setParents(disableID = null){
         this.parents = [{value: null, text: 'Parent'}]
-        this.categoriesParent.forEach(category => this.parents.push({ value: category.id, text: category.name }))
+        this.categoriesParent.forEach(category => this.parents.push({ value: category.id, text: category.name, disabled: category.id == disableID }))
+      },
+      showFormNew(e){
+        e.preventDefault()
+        this.setParents()
       },
       addCategory(e){
         e.preventDefault();
         this.$store.dispatch('admin_category_index/addCategory')
+      },
+      showFormEdit(category){
+        this.$store.dispatch('admin_category_index/editCategory', category)
+        this.setParents(category.id)
+        this.editCategory = {}
+        this.showEdit = true
+      },
+      updateCategory(e){
+        e.preventDefault();
+        this.$store.dispatch('admin_category_index/updateCategory', this.editCategory)
       },
       deleteCategory(category){
         if (confirm("Do you want to delete?")) {

@@ -14,6 +14,14 @@ export default {
     }).then(response => cb(response.data))
       .catch(error => cb(error.response.data))
   },
+  updateCategory(params, cb) {
+    axios({
+      method: "put",
+      url: '/admin/categories/' + params.id,
+      params: params.category
+    }).then(response => cb(response.data))
+      .catch(error => cb(error.response.data))
+  },
   deleteCategory(params, cb) {
     axios({
       method: "delete",
