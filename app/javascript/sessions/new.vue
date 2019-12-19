@@ -1,7 +1,14 @@
 <template>
   <div class="row" id="sessions-new">
     <div class="col-md-4">
-      <b-form @submit="onSubmit" v-if="!auth">
+      <div v-if="auth">
+        <b class="text-success">{{ auth.full_name }} logged in system</b>
+        <b-button size="sm" variant="danger" @click="onSignout">SignOut</b-button>
+        <div>
+          <b-link href="/admin/users" v-if="isAdmin">Manager</b-link>
+        </div>
+      </div>
+      <b-form @submit="onSubmit" v-else>
         <b-form-group>
           <b-form-input
             v-model="user.email"
@@ -23,72 +30,39 @@
         <b-button type="submit" variant="primary">Login</b-button>
         <p class="text-danger">{{ error }}</p>
       </b-form>
-      <div v-else>
-        <b class="text-success">{{ auth.full_name }} logged in system</b>
-        <b-button size="sm" variant="danger" @click="onSignout">SignOut</b-button>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import axios from "axios";
+  import { mapState } from 'vuex'
+
   export default {
     data() {
-      return {
-        user: {
-          email: "",
-          password: ""
-        },
-        auth: "",
-        error: ""
-      }
+      return {}
     },
-    mounted() {
-      if (localStorage.getItem("auth")) {
-        try {
-          this.auth = JSON.parse(localStorage.getItem("auth"));
-        } catch(e) {
-          localStorage.removeItem("auth");
-        }
+    computed: {
+      ...mapState({
+        auth: state => state.session_index.auth,
+        user: state => state.session_index.user,
+        error: state => state.session_index.error
+      }),
+      isAdmin(){
+        return this.auth.role == "admin"
       }
     },
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
-        axios({
-          method: "post",
-          url: window.location.pathname,
-          data: { user: this.user }
-        })
-        .then(response => {
-          this.error = null
-          this.onReset()
-          this.auth = response.data.auth;
-          localStorage.setItem("auth", JSON.stringify(this.auth))
-        })
-        .catch(error => {
-          this.error = error.response.data.error
-        });
+        this.$store.dispatch('session_index/signIn')
       },
       onSignout(evt) {
         evt.preventDefault()
-        axios({
-          method: "delete",
-          url: window.location.origin + '/signout'
-        })
-        .then(response => {
-          this.auth = ""
-          localStorage.removeItem("auth");
-        })
-        .catch(error => {
-          this.error = error.response.data.error
-        });
-      },
-      onReset(){
-        this.user.email = "",
-        this.user.password = ""
+        this.$store.dispatch('session_index/signOut')
       }
+    },
+    mounted() {
+      this.$store.dispatch('session_index/getAuth')
     }
   }
 </script>

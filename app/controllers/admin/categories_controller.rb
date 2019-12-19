@@ -1,5 +1,5 @@
 module Admin
-  class CategoriesController < ApplicationController
+  class CategoriesController < AdminController
     before_action :load_category, only: [:update, :destroy]
 
     def index

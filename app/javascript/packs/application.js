@@ -16,6 +16,11 @@ import CategoriesIndex from 'admin/categories/index'
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
+    el: '#sessions-new',
+    store,
+    render: h => h(SessionsNew, {})
+  })
+  new Vue({
     el: '#users-new',
     render: h => h(UsersNew, {})
   })
@@ -37,9 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     el: '#admin-header',
     render: h => h(AdminHeader, {})
   })
-  new Vue({
-    el: '#sessions-new',
-    render: h => h(SessionsNew, {})
-  })
+
 })
 

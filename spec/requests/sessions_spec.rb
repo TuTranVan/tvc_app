@@ -5,7 +5,7 @@ RSpec.describe "SessionsController", type: :request do
   let(:session) { { email: user.email, password: user.password } }
 
   describe "POST /sign_in" do
-    before { post "/signin", params: { user: session } }
+    before { post "/signin", params: session }
 
     context "When valid params" do
       it "Return status code 200" do
