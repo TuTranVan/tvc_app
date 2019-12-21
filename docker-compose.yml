@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - 3316:3306
+    volumes:
+      - ./db/mysql/volumes:/var/lib/mysql
+
+  web:
+    build: .
+    tty: true
+    volumes:
+      - .:/pj-voucher
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - webpack_dev_server
+
+  webpack_dev_server:
+    build: .
+    command: bash -c 'rm -rf /pj-voucher/public/packs; ./bin/webpack-dev-server'
+    ports:
+      - 3035:3035
+    volumes:
+      - .:/pj-voucher
+      

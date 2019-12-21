@@ -4,6 +4,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password:
+  host: db
 
 development:
   <<: *default
@@ -12,6 +13,7 @@ development:
 test:
   <<: *default
   database: pj-voucher_test
+  host: localhost
 
 production:
   <<: *default
