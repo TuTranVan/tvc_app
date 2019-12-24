@@ -68,3 +68,5 @@ yarn-debug.log*
 !/storage/.keep
 coverage
 db/mysql
+/config/database.production.yml
+/config/secrets.production.yml
